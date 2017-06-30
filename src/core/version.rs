@@ -4,6 +4,7 @@ use std::fmt;
 use std::str::FromStr;
 use std::str;
 use std::clone::Clone;
+use regex::Regex;
 use serde::{Serialize, Serializer, Deserialize, Deserializer};
 use std::fmt::Display;
 use serde::de::Error;
@@ -287,7 +288,8 @@ fn to_u64(s: &str) -> Result<u64, ()> {
 }
 
 fn convert_version_identifier(s: &str) -> Result<VersionIdentifier, ()> {
-    if s.chars().all(|c| c.is_numeric()) {
+    let numeric_version_id_re: Regex = Regex::new(r"^[0-9]+$").unwrap();
+    if numeric_version_id_re.is_match(s) {
         to_u64(s).map(Numeric)
     } else {
         Ok(Alphanumeric(s.to_string()))
