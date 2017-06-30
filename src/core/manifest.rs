@@ -71,10 +71,7 @@ impl fmt::Debug for PackageName {
 }
 
 fn validate_package_name(s: &str) -> bool {
-    s.chars().all(|c| {
-        (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || c == '_' ||
-            c == '-'
-    })
+    ::regex::Regex::new(r"^[-_0-9a-zA-Z]+$").unwrap().is_match(s)
 }
 
 impl PackageName {
