@@ -192,7 +192,7 @@ pub enum GlobError {
     NotFound,
 }
 
-impl ::std::error::Error for GlobError {
+impl StdError for GlobError {
     fn description(&self) -> &str {
         match *self {
             GlobError::Braces => r#"Unexpected curly brace"#,

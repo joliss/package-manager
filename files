@@ -1,0 +1,72 @@
+Instead of separate file include/exclude arrays, do we want a negation syntax?
+There's some precedents for this in .gitignore syntax and Node's globbing
+library.
+
+files: [
+    "**/*.rs"
+    "!vendor/**"
+    "vendor/foo.rs"
+]
+
+Meaning, include all the .rs files except the ones in vendor. But do include
+vendor/foo.rs.
+
+This is something that cannot be done with include/exclude arrays because they
+force us to apply all include rules first.
+
+
+
+
+
+Two use cases:
+
+1. I want to publish all files tracked by git plus some gitignored files. Then I
+   want my include pattern to match everything.
+
+2. I want to publish only files I select. Then perhaps I want my include pattern
+   to only match files tracked by git.
+
+
+
+"src"   // only tracked
+"?src"  // everything
+"!src"  // exclude src
+
+
+files [
+  scm
+  "src/generated.rs"
+]
+
+scm {
+  provider "git"
+  include_tracked_files true
+}
+
+
+
+scm {
+  files false
+}
+
+files [
+  ...
+]
+
+
+
+files [
+  scm
+]
+
+
+
+scm {
+  provider "auto"
+  files false
+}
+
+files [
+  "src/**/*.rs"
+  "!vendor"
+]

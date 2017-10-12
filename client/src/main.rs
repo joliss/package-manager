@@ -120,8 +120,8 @@ fn change_to_project_dir() -> Result {
 
 fn main() {
     // manifest::test_reader();
-    // git::test_git();
-    // process::exit(0);
+    git::test_git();
+    process::exit(0);
 
     let args: Args = Docopt::new(USAGE)
         .map(|d| d.options_first(true))

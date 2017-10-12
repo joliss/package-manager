@@ -5,6 +5,7 @@ use reqwest;
 use toml;
 
 use files::GlobError;
+use manifest::PublishError;
 use git::GitError;
 use git2;
 use pm_lib::index;
@@ -63,6 +64,11 @@ quick_error! {
             from()
         }
         Git(err: GitError) {
+            cause(err)
+            display("{}", err)
+            from()
+        }
+        Publish(err: PublishError) {
             cause(err)
             display("{}", err)
             from()

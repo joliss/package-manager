@@ -111,7 +111,7 @@ impl Manifest {
         let mut file_collection = FileCollection::new(root.to_path_buf())?;
         let git_scm_provider = GitScmProvider::new(root)?;
         for committed_file in git_scm_provider.ls_files()? {
-            file_collection.add_file(committed_file)?;
+            file_collection.add_file(root.join(committed_file))?;
         }
         for glob_pair in get_optional_list_field(object_pair.clone(), "files")?.into_iter() {
             let glob = get_string(glob_pair.clone())?;

@@ -31,6 +31,12 @@ impl GitScmProvider {
         })
     }
 
+    pub fn check_is_pristine(&self) -> Result<(), Error> {
+        if self.repo.state() != RepositoryState::Clean {
+            return Err(Error::from(GitError::NotCleanState))
+        }
+    }
+
     pub fn ls_files(&self) -> Result<Vec<String>, Error> {
         let head_sha = self.repo.refname_to_id("HEAD")?;
         let head = self.repo.find_commit(head_sha)?;
@@ -92,10 +98,20 @@ quick_error! {
         ObjectType {
             description("Git returned an unexpected object type")
         }
+
+        NotCleanState {
+            description("A Git operation such as merge or rebase is in progress in your working tree")
+        }
+        NonEmptyStatus {
+            description("There are modified or untracked files. Commit them to Git or add them to .gitignore before running this command.")
+        }
     }
 }
 
 
 pub fn test_git() {
     println!("{:?}", GitScmProvider::new(&Path::new(".")).unwrap().ls_files());
+    let repo = Repository::discover(&".").unwrap();
+    let statuses = repo.statuses(None).unwrap();
+    println!("{:?}", statuses.iter().map(|e| e.path().unwrap().to_string()).collect::<Vec<String>>());
 }

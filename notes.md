@@ -97,8 +97,6 @@ default_registry = "crates.io" # default, always has lowest priority
 ## Manifest syntax
 
 ```
-pm 1.0
-
 registries [
   "internal.google.com"
 ]
@@ -117,7 +115,7 @@ dependencies {
 }
 
 package {
-  name "mypkg"
+  name "js/mypkg"
   version "1.0.0"
 
   authors [ "Bodil Stokke <bodil@bodil.org>" ]
@@ -127,10 +125,23 @@ package {
   keywords []
 
   files {
-    scm "git"
-    include [ "**/*.js" ]
-    exclude [ "test/**/*.js" ]
+    git
+    add "src/generated/*.rs"
+    add "src/generated/*.rs"
+    exclude "vendor"
   }
+
+  files {
+    git
+    add "src/generated/*.rs"
+  }
+
+  files [
+    git
+    "src/generated/*.rs"
+    "src/generated/*.rs"
+    "!vendor"
+  ]
 
   registry "internal.google.com"
 }
@@ -180,3 +191,14 @@ sure we don't back ourselves into a corner. These features include:
 * [ ] Using the Package Manager for installing binaries
 
 * [ ] That compatibility thing Jo is writing a blog post about
+
+
+## Communities to talk to
+
+* Racket
+* Go
+* Pony (@seantallen?)
+* Python?
+* C++
+* C# (Mads Torgersen?)
+* Idris (@d_christiansen?)
