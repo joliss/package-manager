@@ -13,6 +13,7 @@ extern crate toml;
 extern crate quick_error;
 #[macro_use]
 extern crate im;
+extern crate itertools;
 extern crate reqwest;
 extern crate rand;
 extern crate data_encoding;
