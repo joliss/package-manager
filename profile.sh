@@ -83,7 +83,7 @@ cd "$dir"
 
 cargo test --release --no-run
 
-sudo perf record -g -- "$(ls -tr ../target/release/"$binary"-* | grep -v \\.d$ | tail -n 1)" --test-threads 1 "$@"
+sudo perf record --call-graph dwarf,32768 -F 10000 -m 128M -- "$(ls -tr ../target/release/"$binary"-* | grep -v \\.d$ | tail -n 1)" --test-threads 1 "$@"
 sudo chmod 644 perf.data
 disable_kptr_restrict
 perf script > out.perf
