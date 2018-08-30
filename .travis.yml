@@ -1,7 +1,4 @@
 language: rust
-rust:
-  # remember to edit ./rust-toolchain as well
-  - nightly
 services:
   - postgresql
 addons:
