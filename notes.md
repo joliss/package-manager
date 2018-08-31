@@ -189,3 +189,30 @@ sure we don't back ourselves into a corner. These features include:
   also Guix is a Nix clone with a better-documented API language
 
 * [ ] That compatibility thing Jo is writing a blog post about
+
+
+
+
+
+
+
+scratch
+
+Questions for Yehuda:
+
+Specific questions:
+
+* Has TOML turned out OK?
+* Is allowing for v1 and v1.2.3.4.5 an acceptable semver extension?
+* Is [replace] redundant with git URLs?
+
+General questions:
+
+* Can we make a general-purpose package manager that's also usable?
+* Thoughts on binaries:
+  * precompiled IR (.jar)
+  * compiled C++ (static)
+  * compiled C++ (dynamic against /lib)
+* Thoughts on registry DB
+* Thoughts on constraint solver
+

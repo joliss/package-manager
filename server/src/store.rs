@@ -1,6 +1,5 @@
 use std::env;
 use std::str::FromStr;
-use std::time::SystemTime;
 
 use diesel;
 use diesel::expression::dsl::now;
@@ -17,7 +16,7 @@ use file::File;
 use package::{Package, PackageOwner, Release};
 use user::{User, UserRecord};
 
-use schema::{files, login_sessions, package_owners, package_releases, packages, users};
+use schema::{login_sessions, package_owners, package_releases, packages, users};
 
 #[allow(dead_code)]
 #[derive(Queryable)]
@@ -206,24 +205,12 @@ impl Store {
 
     pub fn get_file(&self, namespace: &str, name: &str) -> Res<File> {
         let db = self.db()?;
-        let results: Vec<File> = files::table
+        let results: Vec<File> = releases::table
             .filter(files::namespace.eq(namespace).and(files::name.eq(name)))
             .load(&db)?;
         match results.into_iter().next() {
             None => Err(Error::UnknownFile(namespace.to_string(), name.to_string())),
             Some(file) => Ok(file),
         }
-    }
-
-    pub fn add_file(&self, namespace: &str, name: &str, data: &[u8]) -> Res<()> {
-        let db = self.db()?;
-        diesel::insert_into(files::table)
-            .values(&File {
-                namespace: namespace.to_owned(),
-                name: name.to_owned(),
-                data: data.to_owned(),
-                uploaded_on: SystemTime::now(),
-            }).execute(&db)?;
-        Ok(())
     }
 }

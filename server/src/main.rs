@@ -180,8 +180,8 @@ struct SearchQuery {
     q: String,
 }
 
-#[get("/files/<namespace>/<name>")]
-fn files(store: State<Store>, namespace: String, name: String) -> Res<Response> {
+#[get("/files/<namespace>/<name>/<version>")]
+fn files(store: State<Store>, namespace: String, name: String, version: String) -> Res<Response> {
     match store.get_file(&namespace, &name) {
         Err(_) => Err(Error::Status(Status::NotFound)),
         Ok(file) => Response::build()

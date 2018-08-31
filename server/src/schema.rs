@@ -58,14 +58,6 @@ table! {
         deprecated_on -> Nullable<Timestamp>,
         deleted -> Nullable<Text>,
         deleted_on -> Nullable<Timestamp>,
-    }
-}
-
-table! {
-    files (namespace, name) {
-        namespace -> Text,
-        name -> Text,
-        data -> Binary,
-        uploaded_on -> Timestamp,
+        tarBrBlob -> Binary,
     }
 }

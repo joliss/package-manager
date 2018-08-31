@@ -14,8 +14,7 @@ use package::Release;
 
 #[derive(Serialize)]
 pub struct Receipt {
-    ok: bool,
-    url: Option<String>,
+    ok: bool
 }
 
 fn validate_manifest(_manifest: &Manifest) -> Res<()> {
@@ -90,15 +89,10 @@ pub fn process_upload<R: Read>(store: &Store, user: &User, reader: R) -> Res<Rec
                 deprecated_on: None,
                 deleted: None,
                 deleted_on: None,
+                tarBrBlob: manifest.data.as_slice().to_owned(), //clone(),
             })?;
-            store.add_file(
-                &manifest.namespace,
-                &filename,
-                manifest.data.as_slice(),
-            )?;
             Ok(Receipt {
-                ok: true,
-                url: Some(url),
+                ok: true
             })
         }
     }
